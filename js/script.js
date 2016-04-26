@@ -20,7 +20,6 @@ var cursors;
 //these are the variables used to modify the parameters in the game below
 var width = 480; //The width of the world
 var height = 3000; //The height of the world
-var platformwidth = 200; //the width of the individual platforms
 
 
 function create() {
@@ -58,10 +57,10 @@ function create() {
     var random_platform_y = game.rnd.integerInRange(10,400);
 
     //place random platforms
-    var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
+    //var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
 
     //for testing purposes: create statically positioned platforms
-    //var ledge = platforms.create(500,400, 'block');
+    var ledge = platforms.create(100,350, 'block');
 
     ledge.scale.y = 0.1; //height of the platform
     ledge.body.immovable = true;
