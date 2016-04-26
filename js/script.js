@@ -5,9 +5,9 @@ var game = new Phaser.Game(800, 480, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
 
-    game.load.image('map', 'assets/map.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.image('block', 'assets/block.png');
+    game.load.image('map', 'assets/map.png'); // thjs is the background
+    game.load.image('ground', 'assets/platform.png');//this is the ground
+    game.load.image('block', 'assets/block.png');//this is the image for the platforms
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 }
@@ -16,6 +16,12 @@ var player;
 var platforms;
 var blocks;
 var cursors;
+
+//these are the variables used to modify the parameters in the game below
+var width = 480; //The width of the world
+var height = 3000; //The height of the world
+var platformwidth = 200; //the width of the individual platforms
+
 
 function create() {
 
@@ -42,19 +48,24 @@ function create() {
     var ground = platforms.create(0, game.world.height - 64, 'ground');
 
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    ground.scale.setTo(7, 1);
+    //ground.scale.setTo(7, 1);
 
-    //  This stops it from falling away when you jump on it
+    //  If this is disabled the platforms fall down under the weight of the player
     ground.body.immovable = true;
 
-    //  Now let's create two ledges
-    var ledge = platforms.create(600, 310, 'block');
-    ledge.scale.y = 0.1;
+    //  Now let's create two ledges to which we pass two randomly generated position coordinates
+    var random_platform_x = game.rnd.integerInRange(10,500);
+    var random_platform_y = game.rnd.integerInRange(10,400);
+
+    //place random platforms
+    var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
+
+    //for testing purposes: create statically positioned platforms
+    //var ledge = platforms.create(500,400, 'block');
+
+    ledge.scale.y = 0.1; //height of the platform
     ledge.body.immovable = true;
 
-    ledge = platforms.create(100, 360, 'block');
-    ledge.scale.y = .1;
-    ledge.body.immovable = true;
 
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -83,14 +94,14 @@ function lockonFollow() {
     game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON);
     style = 'STYLE_LOCKON';
 }
+
+
     
 function update() {
 
     //  Collide the player and the stars with the platforms
     game.physics.arcade.collide(player, platforms);
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    //game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
@@ -124,5 +135,3 @@ function update() {
     }
 
 }
-
-
