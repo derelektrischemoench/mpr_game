@@ -49,9 +49,11 @@ function create() {
 
     //  Now let's create two ledges
     var ledge = platforms.create(600, 310, 'block');
+    ledge.scale.y = 0.1;
     ledge.body.immovable = true;
 
-    ledge = platforms.create(300, 310, 'block');
+    ledge = platforms.create(100, 360, 'block');
+    ledge.scale.y = .1;
     ledge.body.immovable = true;
 
     // The player and its settings
