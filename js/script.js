@@ -1,5 +1,4 @@
-//FOR SOME DUMB CACHING REASON YOU ARE REQUIRED TO RUN THIS SHIT IN FIREFOX
-//FUCK. Y U DO DIS, GOOGLE?
+//TODO: change size of platforms, manage random platform creation to prevent overlays
 
 var game = new Phaser.Game(800, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -41,32 +40,37 @@ function create() {
 
     //  We will enable physics for any object that is created in this group
     platforms.enableBody = true;
-    blocks.enablyBody = true;
 
     // Here we create the ground.
     var ground = platforms.create(0, game.world.height - 64, 'ground');
+    ground.enableBody=true;
+    ground.body.immovable = true;//keeps platforms in place
 
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    //ground.scale.setTo(7, 1);
 
-    //  If this is disabled the platforms fall down under the weight of the player
-    ground.body.immovable = true;
 
-    //  Now let's create two ledges to which we pass two randomly generated position coordinates
-    var random_platform_x = game.rnd.integerInRange(10,500);
-    var random_platform_y = game.rnd.integerInRange(10,400);
 
-    //place random platforms
+
+    //place single platforms; comment this out later
     //var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
 
-    //for testing purposes: create statically positioned platforms
-    var ledge = platforms.create(100,350, 'block');
+    function createLedges(random_platform_x, random_platform_y) {
+        var block = platforms.create(random_platform_x,random_platform_y, 'block');
+        block.body.immovable = true;
+        console.log("A platform has been created since the function has been called");
+    }
 
-    ledge.scale.y = 0.1; //height of the platform
-    ledge.body.immovable = true;
+    //Loop to Create random ledges; value settings: 1st value: x-offset to left, 2nd value: y-offset to the top
 
+    for (i = 0; i<5; i++){
+        createLedges(game.rnd.integerInRange(10, 500),game.rnd.integerInRange(10, 500));
+        i++;
 
-    // The player and its settings
+    }
+
+    /****************************************************************************************************************/
+    /*                      Player related settings                                                                  /
+    /************************************************************************************************************** */
+
     player = game.add.sprite(32, game.world.height - 150, 'dude');
     
     //  We need to enable physics on the player
