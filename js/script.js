@@ -90,10 +90,23 @@ function create() {
         i++;
     }
 
+
     //fill the array that holds the x coordinates of the platforms with random integers
     for (var i = 0; i < PlatformXarray.length; i++) {
         PlatformXarray[i] = game.rnd.integerInRange (10,400);
         i++;
+    }
+    
+    //check the arrays:
+    for (var i = 0; i < PlatformXarray.length; i++) {
+        var obj = PlatformXarray[i];
+        console.log(" this is the x- values array" + obj);
+    }
+
+    for (var i = 0; i < PlatformYarray.length; i++) {
+        var obj1 = PlatformYarray[i];
+        console.log("this is the y - values array" + obj1);
+
     }
 
     //TODO: call createLedges() with the components of the x- and y- arrays
