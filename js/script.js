@@ -1,4 +1,6 @@
 //TODO: change size of platforms, manage random platform creation to prevent overlays
+//TODO: Determine the players position at a certain point in time and create platforms based on those properties
+// TODO: first though; manage spacing between platforms
 
 var game = new Phaser.Game(800, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -54,18 +56,41 @@ function create() {
     //var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
 
     function createLedges(random_platform_x, random_platform_y) {
-        var block = platforms.create(random_platform_x,random_platform_y, 'block');
+        var block;
+        block = platforms.create(random_platform_x, random_platform_y, 'block');//y do we need to pass the block parameter here?
         block.body.immovable = true;
         console.log("A platform has been created since the function has been called");
     }
 
     //Loop to Create random ledges; value settings: 1st value: x-offset to left, 2nd value: y-offset to the top
+    //ensure that the individual platforms have enough space between each other...
+    //40 px in each direction should probably suffice...
+    //this means we need to ensure that the random integers are created with spacing
 
-    for (i = 0; i<5; i++){
-        createLedges(game.rnd.integerInRange(10, 500),game.rnd.integerInRange(10, 500));
+    for (i = 0; i<=2; i++){
+        createLedges(game.rnd.integerInRange(10, 250),game.rnd.integerInRange(10, 250));
         i++;
+        //we need to automate this task
+        if(i>1){
+            createLedges(game.rnd.integerInRange(251, 500), game.rnd.integerInRange(251,500));
 
+        }
     }
+
+
+
+    
+    ///THIS CALLS FOR MOTHERFUCKNG ARRAYS
+    var ledgesArray = [10];
+    ledgesArray[0] = 1;
+    ledgesArray[1] = 2;
+    ledgesArray[2] = 3;
+    console.log("This is the length of the ledgesArray" + ledgesArray.length);
+//this works just like in java.
+    for (var j = 0; j < ledgesArray.length; j++) {
+        console.log(ledgesArray[j]);
+    }
+
 
     /****************************************************************************************************************/
     /*                      Player related settings                                                                  /
