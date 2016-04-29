@@ -67,7 +67,9 @@ function create() {
     //40 px in each direction should probably suffice...
     //this means we need to ensure that the random integers are created with spacing
 
-    for (i = 0; i<=2; i++){
+
+
+    /*for (i = 0; i<=2; i++){
         createLedges(game.rnd.integerInRange(10, 250),game.rnd.integerInRange(10, 250));
         i++;
         //we need to automate this task
@@ -75,24 +77,27 @@ function create() {
             createLedges(game.rnd.integerInRange(251, 500), game.rnd.integerInRange(251,500));
 
         }
-    }
+    }*/
     
     //improvement try platform creation algorithm
-    
+    //store random numbers in an array, one for x one for y and use those to call the platform create function
+    var PlatformYarray = [20];
+    var PlatformXarray = [20];
 
-
-
-    
-    ///THIS CALLS FOR MOTHERFUCKNG ARRAYS
-    var ledgesArray = [10];
-    ledgesArray[0] = 1;
-    ledgesArray[1] = 2;
-    ledgesArray[2] = 3;
-    console.log("This is the length of the ledgesArray" + ledgesArray.length);
-//this works just like in java.
-    for (var j = 0; j < ledgesArray.length; j++) {
-        console.log(ledgesArray[j]);
+    //fill the array that holds the y coordinates of the platforms with random integers
+    for (var i = 0; i < PlatformYarray.length; i++) {
+        PlatformYarray[i] =  game.rnd.integerInRange(10,20);
+        i++;
     }
+
+    //fill the array that holds the x coordinates of the platforms with random integers
+    for (var i = 0; i < PlatformXarray.length; i++) {
+        PlatformXarray[i] = game.rnd.integerInRange (10,400);
+        i++;
+    }
+
+    //TODO: call createLedges() with the components of the x- and y- arrays
+
 
 
     /****************************************************************************************************************/
