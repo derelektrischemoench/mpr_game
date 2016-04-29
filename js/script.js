@@ -8,7 +8,7 @@ function preload() {
 
     game.load.image('map', 'assets/map.png'); // thjs is the background
     game.load.image('ground', 'assets/platform.png');//this is the ground
-    game.load.image('block', 'assets/block.png');//this is the image for the platforms
+    game.load.image('block', 'assets/block.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 }
@@ -57,7 +57,7 @@ function create() {
 
     function createLedges(random_platform_x, random_platform_y) {
         var block;
-        block = platforms.create(random_platform_x, random_platform_y, 'block');//y do we need to pass the block parameter here?
+        block = platforms.create(random_platform_x, random_platform_y, 'block');//block because we need to link it to the spritesheet
         block.body.immovable = true;
         console.log("A platform has been created since the function has been called");
     }
@@ -76,6 +76,9 @@ function create() {
 
         }
     }
+    
+    //improvement try platform creation algorithm
+    
 
 
 
