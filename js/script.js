@@ -62,52 +62,33 @@ function create() {
         console.log("A platform has been created since the function has been called");
     }
 
-    //Loop to Create random ledges; value settings: 1st value: x-offset to left, 2nd value: y-offset to the top
-    //ensure that the individual platforms have enough space between each other...
-    //40 px in each direction should probably suffice...
-    //this means we need to ensure that the random integers are created with spacing
+    
+    function createArrays(platformarrayLength){
+        var PlatformYarray = [platformarrayLength];
+        var PlatformXarray = [platformarrayLength];
 
 
-
-    /*for (i = 0; i<=2; i++){
-        createLedges(game.rnd.integerInRange(10, 250),game.rnd.integerInRange(10, 250));
-        i++;
-        //we need to automate this task
-        if(i>1){
-            createLedges(game.rnd.integerInRange(251, 500), game.rnd.integerInRange(251,500));
-
+        for (var i = 0; i < PlatformYarray.length; i++) {
+            PlatformYarray[i] =  game.rnd.integerInRange(10,20);
+            i++;
         }
-    }*/
+
+        //fill the array that holds the x coordinates of the platforms with random integers
+        for (var i = 0; i < PlatformXarray.length; i++) {
+            PlatformXarray[i] = game.rnd.integerInRange (10,400);
+            i++;
+        }
+        
+    }
+
+
+
+    var moep = new createArrays(4) //create a new array
+    moep.
+
     
-    //improvement try platform creation algorithm
-    //store random numbers in an array, one for x one for y and use those to call the platform create function
-    var PlatformYarray = [20];
-    var PlatformXarray = [20];
-
-    //fill the array that holds the y coordinates of the platforms with random integers
-    for (var i = 0; i < PlatformYarray.length; i++) {
-        PlatformYarray[i] =  game.rnd.integerInRange(10,20);
-        i++;
-    }
 
 
-    //fill the array that holds the x coordinates of the platforms with random integers
-    for (var i = 0; i < PlatformXarray.length; i++) {
-        PlatformXarray[i] = game.rnd.integerInRange (10,400);
-        i++;
-    }
-    
-    //check the arrays:
-    for (var i = 0; i < PlatformXarray.length; i++) {
-        var obj = PlatformXarray[i];
-        console.log(" this is the x- values array" + obj);
-    }
-
-    for (var i = 0; i < PlatformYarray.length; i++) {
-        var obj1 = PlatformYarray[i];
-        console.log("this is the y - values array" + obj1);
-
-    }
 
     //TODO: call createLedges() with the components of the x- and y- arrays
 
