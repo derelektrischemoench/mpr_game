@@ -1,6 +1,7 @@
 //TODO: change size of platforms, manage random platform creation to prevent overlays
 //TODO: Determine the players position at a certain point in time and create platforms based on those properties
 // TODO: first though; manage spacing between platforms
+//todo: MAKE EVERYTHING OBJECTORIENTED
 
 var game = new Phaser.Game(800, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -65,26 +66,30 @@ function create() {
     
     function createArrays(platformarrayLength){
         var PlatformYarray = [platformarrayLength];
-        var PlatformXarray = [platformarrayLength];
+        //array that holds the y coordinates
+        PlatformYarray[0] =  game.rnd.integerInRange(10,20);
 
-
-        for (var i = 0; i < PlatformYarray.length; i++) {
-            PlatformYarray[i] =  game.rnd.integerInRange(10,20);
-            i++;
+        for (var i = 1; i < PlatformYarray; i++) {
+            var obj = PlatformYarray[i-1];
+            var obj_new = obj + game.rnd.integerInRange(10,20);
+            PlatformYarray[i]=obj_new;
         }
 
-        //fill the array that holds the x coordinates of the platforms with random integers
-        for (var i = 0; i < PlatformXarray.length; i++) {
-            PlatformXarray[i] = game.rnd.integerInRange (10,400);
-            i++;
-        }
-        
+        return obj_new;
     }
 
+    function testArray(){
+        //test
+        for (var i = 0; i <= PlatformYarray; i++) {
+            console.log(PlatformYarray[i]);
+        }
+    }
+
+    var a = new Object(2);
 
 
-    var moep = new createArrays(4) //create a new array
-    moep.
+
+
 
     
 
