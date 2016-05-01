@@ -85,7 +85,7 @@ function create() {
         }
     }
 
-    var a = new Object(2);
+
 
 
 
