@@ -3,58 +3,67 @@
 // TODO: first though; manage spacing between platforms
 //todo: MAKE EVERYTHING OBJECTORIENTED
 
-var game = new Phaser.Game(800, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var GameState = function (game) {    
+};
 
-function preload() {
+//load assets
+GameState.prototype.preload = function(){
 
-    game.load.image('map', 'assets/map.png'); // thjs is the background
-    game.load.image('ground', 'assets/platform.png');//this is the ground
-    game.load.image('block', 'assets/block.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    this.game.load.image('map', 'assets/map.png'); // thjs is the background
+    this.game.load.image('ground', 'assets/platform.png');//this is the ground
+    this.game.load.image('block', 'assets/block.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
+    this.game.load.spritesheet('player', 'assets/dude.png', 32, 48);
 
-}
+};
 
-var player;
-var platforms;
-var blocks;
-var cursors;
+GameState.prototype.create = function () {
+    this.game.stage.background = "map";
 
-//these are the variables used to modify the parameters in the game below
-var width = 480; //The width of the world
-var height = 3000; //The height of the world
+    //movement:
+    this.MAX_SPEED = 500; //px/s
+    this.ACCELERATION = 1500; //px/s/s
+    this.DRAG = 600; //px/s
+    this.GRAVITY = 2600; //px/s/s
+    this.JUMP_SPEED = -700; //->negative because negative is up
 
+    //create player
+    this.player = this.game.add.sprite(this.game.width/2, this.game.height - 64, 'player');
 
-function create() {
+    //physics
+    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+    this.player.body.collideWorldBounds = true;
+    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);//x,y
 
-    game.world.setBounds(0, 0, 3000, 480);
-    for (var i=0; i < 10; i++)
-    {
-        game.add.sprite(game.world.randomX, game.world.randomY, 'dude');
+    //add drag to slow down the player when no input key is pressed
+    this.player.body.drag.setTo(this.DRAG, 0); //X,Y
+
+    //introducing:gravity
+    game.physics.arcade.gravity.y = this.GRAVITY;
+
+    //flag to check whether the jump button is pressed
+    this.jumping = false;
+
+    //create ground
+    this.ground = this.game.add.group();
+    for(var x = 0; x < this.game.width; x += 32){
+        //Add ground, enable physics, make blocks static
+        var GroundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+        groundBlock.body.immovable = true;
+        groundBlock.body.allowGravity = false;
+        this.ground.add(groundBlock);
     }
-    //  We're going to be using physics, so enable the Arcade Physics system
-    game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //  A simple background for our game
-    game.add.sprite(0, 0, 'map');
-
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
-    blocks = game.add.group();
-
-    //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
-
-    // Here we create the ground.
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
-    ground.enableBody=true;
-    ground.body.immovable = true;//keeps platforms in place
+    //create controls:
+    this.game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.SPACEBAR,
+        Phaser.Keyboard.DOWN
+    ]);
+};
 
 
-
-
-
-    //place single platforms; comment this out later
-    //var ledge = platforms.create(random_platform_x, random_platform_y, 'block'); //1st value:x-offset to the left, 2nd value: y-offset to the top
 
     function createLedges(random_platform_x, random_platform_y) {
         var block;
@@ -100,73 +109,53 @@ function create() {
 
 
     /****************************************************************************************************************/
-    /*                      Player related settings                                                                  /
+    /*                      Player related settings and controls                                                                  /
     /************************************************************************************************************** */
 
-    player = game.add.sprite(32, game.world.height - 150, 'dude');
-    
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+//JUMPING
+ GameState.prototype.update = function() {
+     //collission checking
+     this.game.physics.arcade.collide(this.player, this.ground);
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 1000;
-    player.body.collideWorldBounds = true;
+     //controls
+     if(this.leftInputIsActive()) {
+         this.player.body.acceleration.x = -this.ACCELERATION;
+     } else if (this.rightInputIsActive()) {
+         this.player.body.acceleration.x = this.ACCELERATION;
+     } else {
+         this.player.body.acceleration.x = 0;
+     }
 
-    //  Our two animations, walking left and right.
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+     //boolean to check whether the player is touching the ground
+     var onTheGround = this.player.body.touching.down;
 
-    //  Our controls.
-    cursors = game.input.keyboard.createCursorKeys();
-        
-    game.camera.follow(player);
-    lockonFollow();
+     //if this is true the dude can do a double jump
+     if(onTheGround){
+         this.jumps = 2;
+         this.jumping = false;
+     }
 
-}
+     //JUMP!!
+     if(this.jumps > 0 && this.upInputIsActive(150)){
+         this.playre.body.velocity.y = this.JUMP_SPEED;
+         this.jumping = true;
+     }
 
-function lockonFollow() {
-    game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON);
-    style = 'STYLE_LOCKON';
-}
+     //counter to reduce the number of available jumps for double jump
+     if(this.jumping && this.upInputReleased()){
+         this.jumps--;
+         this.jumping = false;
+     }
+ };
 
+//left-movement
+GameState.prototype.leftInputIsActive = function () {
+    var isActive = false;
 
-    
-function update() {
+    isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+    isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
-    //  Collide the player and the stars with the platforms
-    game.physics.arcade.collide(player, platforms);
+    return isActive;
 
-
-    //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
-
-    if (cursors.left.isDown)
-    {
-        //  Move to the left
-        player.body.velocity.x = -300;
-
-        player.animations.play('left');
-    }
-    else if (cursors.right.isDown)
-    {
-        //  Move to the right
-        player.body.velocity.x = 300;
-
-        player.animations.play('right');
-    }
-    else
-    {
-        //  Stand still
-        player.animations.stop();
-
-        player.frame = 4;
-    }
-    
-    //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.body.velocity.y = -350;
-    }
 
 }
