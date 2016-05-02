@@ -26,12 +26,14 @@ GameState.prototype.create = function () {
     this.JUMP_SPEED = -700; //->negative because negative is up
 
     //create player
-    this.player = this.game.add.sprite(this.game.width/2, this.game.height - 64, 'player');
+    this.player = this.game.add.sprite(this.game.width/2, 100, 'player');
 
     //physics
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.player.body.collideWorldBounds = true;
     this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);//x,y
+
+
 
     //add drag to slow down the player when no input key is pressed
     this.player.body.drag.setTo(this.DRAG, 0); //X,Y
@@ -50,7 +52,9 @@ GameState.prototype.create = function () {
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = false;//this allows the player to push the bloks away
         groundBlock.body.allowGravity = false;//setting this makes the blocks fall when the player touches them
-        this.ground.add(groundBlock);//setting this makes the player unable to move
+        groundBlock.collideWorldBounds = true;
+
+        //this.ground.add(groundBlock);//setting this makes the player unable to move
     }
 
     //create controls:
