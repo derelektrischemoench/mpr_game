@@ -1,7 +1,6 @@
 //TODO: change size of platforms, manage random platform creation to prevent overlays
 //TODO: Determine the players position at a certain point in time and create platforms based on those properties
 // TODO: first though; manage spacing between platforms
-//todo: MAKE EVERYTHING OBJECTORIENTED
 
 var GameState = function (game) {    
 };
@@ -10,8 +9,8 @@ var GameState = function (game) {
 GameState.prototype.preload = function(){
 
     this.game.load.image('map', 'assets/map.png'); // thjs is the background
-    this.game.load.image('ground', 'assets/platform.png');//this is the ground
-    this.game.load.image('block', 'assets/block.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
+    this.game.load.image('ground', 'assets/block.png');//this is the ground
+    this.game.load.image('block', 'assets/platform.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
     this.game.load.spritesheet('player', 'assets/dude.png', 32, 48);
 
 };
@@ -47,25 +46,25 @@ GameState.prototype.create = function () {
     this.ground = this.game.add.group();
     for(var x = 0; x < this.game.width; x += 32){
         //Add ground, enable physics, make blocks static
-        var GroundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-        groundBlock.body.immovable = true;
-        groundBlock.body.allowGravity = false;
-        this.ground.add(groundBlock);
+        groundBlock.body.immovable = false;//this allows the player to push the bloks away
+        groundBlock.body.allowGravity = false;//setting this makes the blocks fall when the player touches them
+        this.ground.add(groundBlock);//setting this makes the player unable to move
     }
 
     //create controls:
     this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.LEFT,
         Phaser.Keyboard.RIGHT,
-        Phaser.Keyboard.SPACEBAR,
+        Phaser.Keyboard.UP,
         Phaser.Keyboard.DOWN
     ]);
 };
 
 
 
-    function createLedges(random_platform_x, random_platform_y) {
+   /* function createLedges(random_platform_x, random_platform_y) {
         var block;
         block = platforms.create(random_platform_x, random_platform_y, 'block');//block because we need to link it to the spritesheet
         block.body.immovable = true;
@@ -92,17 +91,7 @@ GameState.prototype.create = function () {
         for (var i = 0; i <= PlatformYarray; i++) {
             console.log(PlatformYarray[i]);
         }
-    }
-
-
-
-
-
-
-
-    
-
-
+    }*/
 
     //TODO: call createLedges() with the components of the x- and y- arrays
 
@@ -118,7 +107,7 @@ GameState.prototype.create = function () {
      this.game.physics.arcade.collide(this.player, this.ground);
 
      //controls
-     if(this.leftInputIsActive()) {
+     if (this.leftInputIsActive()) {
          this.player.body.acceleration.x = -this.ACCELERATION;
      } else if (this.rightInputIsActive()) {
          this.player.body.acceleration.x = this.ACCELERATION;
@@ -137,7 +126,7 @@ GameState.prototype.create = function () {
 
      //JUMP!!
      if(this.jumps > 0 && this.upInputIsActive(150)){
-         this.playre.body.velocity.y = this.JUMP_SPEED;
+         this.player.body.velocity.y = this.JUMP_SPEED;
          this.jumping = true;
      }
 
@@ -153,9 +142,42 @@ GameState.prototype.leftInputIsActive = function () {
     var isActive = false;
 
     isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
-    isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+    isActive |= (this.game.input.activePointer.isDown &&
+        this.game.input.activePointer.x < this.game.width/4);
 
     return isActive;
+};
 
+GameState.prototype.rightInputIsActive = function () {
+    var isActive = false;
 
-}
+    isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+    isActive |= (this.game.input.activePointer.isDown &&
+        this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+
+    return isActive;
+};
+
+//check if the jump function is active aka if the player presses the jump button
+GameState.prototype.upInputIsActive = function(duration) {
+    var isActive= false;
+
+    isActive = this.input.keyboard.downDurations(Phaser.Keyboard.UP, duration);
+    isActive |= (this.game.input.activePointer.justPressed(duration + 1000/60) &&
+        this.game.input.activePointer.x > this.game.width/4 &&
+        this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
+
+    return isActive;
+};
+
+GameState.prototype.upInputReleased = function () {
+    var released = false;
+
+    released = this.input.keyboard.upDuration(Phaser.Keyboard.UP);
+    released |= this.game.input.activePointer.justReleased();
+
+    return released;
+};
+
+var game = new Phaser.Game(848,450, Phaser.AUTO, 'game');
+game.state.add('game', GameState, true);
