@@ -29,25 +29,29 @@ GameState.prototype.create = function () {
     this.player = this.game.add.sprite(this.game.width/2, 100, 'player');
 
     //physics
-    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-    this.player.body.collideWorldBounds = true;
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);//x,y
-
-
-
-    //add drag to slow down the player when no input key is pressed
-    this.player.body.drag.setTo(this.DRAG, 0); //X,Y
-
-    //introducing:gravity
+    //enable physics on player
+    game.physics.enable(this.player);
     game.physics.arcade.gravity.y = this.GRAVITY;
+    this.player.body.collideWorldBounds = true;
+
+
 
     //flag to check whether the jump button is pressed
     this.jumping = false;
 
-    //create ground
     this.ground = this.game.add.group();
-    for(var x = 0; x < this.game.width; x += 32){
-        //Add ground, enable physics, make blocks static
+    var ground = this.game.add.sprite(192, this.game.height - 85, 'ground');//1st: x offset, scnd: y offset
+    ground.Physics.enable(ground, Phaser.Physics.ARCADE);
+    ground.player.body.collideWorldBounds = true;
+
+ 
+    //create ground
+    /*this.ground = this.game.add.group();
+    for(var x = 0; x < 10; x += 32){
+       
+    for(var x = 0; x < 10; x += 32){ //Add ground, enable physics, make blocks static
         var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
         groundBlock.body.immovable = false;//this allows the player to push the bloks away
@@ -55,7 +59,7 @@ GameState.prototype.create = function () {
         groundBlock.collideWorldBounds = true;
 
         //this.ground.add(groundBlock);//setting this makes the player unable to move
-    }
+    }*/
 
     //create controls:
     this.game.input.keyboard.addKeyCapture([
@@ -108,7 +112,7 @@ GameState.prototype.create = function () {
 //JUMPING
  GameState.prototype.update = function() {
      //collission checking
-     this.game.physics.arcade.collide(this.player, this.ground);
+     //this.game.physics.arcade.collide(this.player, this.ground);
 
      //controls
      if (this.leftInputIsActive()) {
