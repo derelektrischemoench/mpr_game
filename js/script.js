@@ -16,6 +16,11 @@ GameState.prototype.preload = function(){
 };
 
 GameState.prototype.create = function () {
+    var ground;
+    var player = this.player;
+    var MAX_SPEED = this.MAX_SPEED;
+
+
     this.game.stage.background = "map";
 
     //movement:
@@ -30,11 +35,11 @@ GameState.prototype.create = function () {
 
     //physics
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);//x,y
+    //this.player.body.maxSpeed.setTo(MAX_SPEED, MAX_SPEED * 10);//x,y
     //enable physics on player
     game.physics.enable(this.player);
     game.physics.arcade.gravity.y = this.GRAVITY;
-    this.player.body.collideWorldBounds = true;
+    //this.player.body.collideWorldBounds = true;
 
 
 
@@ -42,9 +47,14 @@ GameState.prototype.create = function () {
     this.jumping = false;
 
     this.ground = this.game.add.group();
-    var ground = this.game.add.sprite(192, this.game.height - 85, 'ground');//1st: x offset, scnd: y offset
-    ground.Physics.enable(ground, Phaser.Physics.ARCADE);
-    ground.player.body.collideWorldBounds = true;
+    for(var x = 0; x < this.game.width; x += 32) {
+        // Add the ground blocks, enable physics on each, make them immovable
+        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+        groundBlock.body.immovable = true;
+        groundBlock.body.allowGravity = false;
+        this.ground.add(groundBlock);
+    }
 
  
     //create ground
@@ -112,30 +122,30 @@ GameState.prototype.create = function () {
 //JUMPING
  GameState.prototype.update = function() {
      //collission checking
-     //this.game.physics.arcade.collide(this.player, this.ground);
+     this.game.physics.arcade.collide(this.player, this.ground);
 
      //controls
-     if (this.leftInputIsActive()) {
+     /*if (this.leftInputIsActive()) {
          this.player.body.acceleration.x = -this.ACCELERATION;
      } else if (this.rightInputIsActive()) {
          this.player.body.acceleration.x = this.ACCELERATION;
      } else {
          this.player.body.acceleration.x = 0;
-     }
+     }*/
 
      //boolean to check whether the player is touching the ground
+     //AS OF 20160506 THIS WORKS!
      var onTheGround = this.player.body.touching.down;
-
      //if this is true the dude can do a double jump
      if(onTheGround){
-         this.jumps = 2;
-         this.jumping = false;
+         this.player.jumps = 2;
+         this.player.jumping = false;
      }
 
      //JUMP!!
      if(this.jumps > 0 && this.upInputIsActive(150)){
          this.player.body.velocity.y = this.JUMP_SPEED;
-         this.jumping = true;
+         this.player.jumping = true;
      }
 
      //counter to reduce the number of available jumps for double jump
