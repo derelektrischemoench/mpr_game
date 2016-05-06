@@ -21,31 +21,17 @@ GameState.prototype.create = function () {
     //movement:
     this.MAX_SPEED = 500; //px/s
     this.ACCELERATION = 1500; //px/s/s
-    this.DRAG = 600; //px/s
-    this.GRAVITY = 2600; //px/s/s
-    this.JUMP_SPEED = -700; //->negative because negative is up
-
+    this.DRAG = 900; //px/s
     //create player
-    this.player = this.game.add.sprite(this.game.width/2, 100, 'player');
+    this.player = this.game.add.sprite(this.game.width/2, this.game.height - 90, 'player');
 
     //physics
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    //this.player.body.maxSpeed.setTo(MAX_SPEED, MAX_SPEED * 10);//x,y
-    //enable physics on player
-    game.physics.enable(this.player);
-    game.physics.arcade.gravity.y = this.GRAVITY;
-
+    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     //make player collide with the boundaries of the game
     this.player.body.collideWorldBounds = true;
+    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED);
 
-    //controls:
-    this.game.input.keyboard.addKeyCapture([
-        Phaser.Keyboard.LEFT,
-        Phaser.Keyboard.RIGHT,
-        Phaser.Keyboard.UP,
-        Phaser.Keyboard.DOWN
-    ]);
-
+    this.player.body.drag.setTo(this.DRAG,0);
 
     this.ground = this.game.add.group();
     for(var x = 0; x < this.game.width; x += 32) {
@@ -57,13 +43,24 @@ GameState.prototype.create = function () {
         this.ground.add(groundBlock);
     }
 
+    //controls:
+    this.game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.UP,
+        Phaser.Keyboard.DOWN
+    ]);
 
 
- 
+
+
+
+
+
     //create ground
     /*this.ground = this.game.add.group();
     for(var x = 0; x < 10; x += 32){
-       
+
     for(var x = 0; x < 10; x += 32){ //Add ground, enable physics, make blocks static
         var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
         this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
@@ -120,11 +117,11 @@ GameState.prototype.create = function () {
 
      //controls
      if (this.leftInputIsActive()) {
-         this.player.body.velocity.x = -this.MAX_SPEED;
+         this.player.body.acceleration.x = -this.ACCELERATION;
      } else if (this.rightInputIsActive()) {
-         this.player.body.velocity.x = this.MAX_SPEED;
+         this.player.body.acceleration.x = this.ACCELERATION;
      } else {
-         this.player.body.velocity.x = 0;
+         this.player.body.acceleration.x = 0;
      }
  };
 
