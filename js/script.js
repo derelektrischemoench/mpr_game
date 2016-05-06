@@ -16,11 +16,6 @@ GameState.prototype.preload = function(){
 };
 
 GameState.prototype.create = function () {
-    var ground;
-    var player = this.player;
-    var MAX_SPEED = this.MAX_SPEED;
-
-
     this.game.stage.background = "map";
 
     //movement:
@@ -39,12 +34,18 @@ GameState.prototype.create = function () {
     //enable physics on player
     game.physics.enable(this.player);
     game.physics.arcade.gravity.y = this.GRAVITY;
-    //this.player.body.collideWorldBounds = true;
 
+    //make player collide with the boundaries of the game
+    this.player.body.collideWorldBounds = true;
 
+    //controls:
+    this.game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.UP,
+        Phaser.Keyboard.DOWN
+    ]);
 
-    //flag to check whether the jump button is pressed
-    this.jumping = false;
 
     this.ground = this.game.add.group();
     for(var x = 0; x < this.game.width; x += 32) {
@@ -55,6 +56,8 @@ GameState.prototype.create = function () {
         groundBlock.body.allowGravity = false;
         this.ground.add(groundBlock);
     }
+
+
 
  
     //create ground
@@ -70,14 +73,6 @@ GameState.prototype.create = function () {
 
         //this.ground.add(groundBlock);//setting this makes the player unable to move
     }*/
-
-    //create controls:
-    this.game.input.keyboard.addKeyCapture([
-        Phaser.Keyboard.LEFT,
-        Phaser.Keyboard.RIGHT,
-        Phaser.Keyboard.UP,
-        Phaser.Keyboard.DOWN
-    ]);
 };
 
 
@@ -119,83 +114,62 @@ GameState.prototype.create = function () {
     /*                      Player related settings and controls                                                                  /
     /************************************************************************************************************** */
 
-//JUMPING
  GameState.prototype.update = function() {
      //collission checking
      this.game.physics.arcade.collide(this.player, this.ground);
 
      //controls
-     /*if (this.leftInputIsActive()) {
-         this.player.body.acceleration.x = -this.ACCELERATION;
+     if (this.leftInputIsActive()) {
+         this.player.body.velocity.x = -this.MAX_SPEED;
      } else if (this.rightInputIsActive()) {
-         this.player.body.acceleration.x = this.ACCELERATION;
+         this.player.body.velocity.x = this.MAX_SPEED;
      } else {
-         this.player.body.acceleration.x = 0;
-     }*/
-
-     //boolean to check whether the player is touching the ground
-     //AS OF 20160506 THIS WORKS!
-     var onTheGround = this.player.body.touching.down;
-     //if this is true the dude can do a double jump
-     if(onTheGround){
-         this.player.jumps = 2;
-         this.player.jumping = false;
-     }
-
-     //JUMP!!
-     if(this.jumps > 0 && this.upInputIsActive(150)){
-         this.player.body.velocity.y = this.JUMP_SPEED;
-         this.player.jumping = true;
-     }
-
-     //counter to reduce the number of available jumps for double jump
-     if(this.jumping && this.upInputReleased()){
-         this.jumps--;
-         this.jumping = false;
+         this.player.body.velocity.x = 0;
      }
  };
 
-//left-movement
-GameState.prototype.leftInputIsActive = function () {
+//Player-left movement:
+GameState.prototype.leftInputIsActive = function(){
     var isActive = false;
 
     isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
     isActive |= (this.game.input.activePointer.isDown &&
-        this.game.input.activePointer.x < this.game.width/4);
+                this.game.input.activePointer.x < this.game.width/4);
 
     return isActive;
 };
 
-GameState.prototype.rightInputIsActive = function () {
+GameState.prototype.rightInputIsActive = function(){
     var isActive = false;
 
     isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
     isActive |= (this.game.input.activePointer.isDown &&
-        this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+                this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
     return isActive;
-};
-
-//check if the jump function is active aka if the player presses the jump button
-GameState.prototype.upInputIsActive = function(duration) {
-    var isActive= false;
-
-    isActive = this.input.keyboard.downDurations(Phaser.Keyboard.UP, duration);
-    isActive |= (this.game.input.activePointer.justPressed(duration + 1000/60) &&
-        this.game.input.activePointer.x > this.game.width/4 &&
-        this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
-
-    return isActive;
-};
-
-GameState.prototype.upInputReleased = function () {
-    var released = false;
-
-    released = this.input.keyboard.upDuration(Phaser.Keyboard.UP);
-    released |= this.game.input.activePointer.justReleased();
-
-    return released;
 };
 
 var game = new Phaser.Game(848,450, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
