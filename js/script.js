@@ -1,6 +1,7 @@
 //TODO: change size of platforms, manage random platform creation to prevent overlays
 //TODO: Determine the players position at a certain point in time and create platforms based on those properties
 // TODO: first though; manage spacing between platforms
+//TODO: create data structures to hold platform values
 
 var GameState = function (game) {    
 };
@@ -52,8 +53,6 @@ GameState.prototype.create = function () {
         this.ground.add(groundBlock);
     }
 
-
-
     //controls:
     this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.LEFT,
@@ -62,20 +61,16 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-};
-
-
-
-   /* function createLedges(random_platform_x, random_platform_y) {
+    function createLedges(random_platform_x, random_platform_y) {
         var block;
         block = platforms.create(random_platform_x, random_platform_y, 'block');//block because we need to link it to the spritesheet
         block.body.immovable = true;
         console.log("A platform has been created since the function has been called");
     }
 
-    
+
     function createArrays(platformarrayLength){
-        var PlatformYarray = [platformarrayLength];
+        var PlatformYarray = new Array();
         //array that holds the y coordinates
         PlatformYarray[0] =  game.rnd.integerInRange(10,20);
 
@@ -85,7 +80,6 @@ GameState.prototype.create = function () {
             PlatformYarray[i]=obj_new;
         }
 
-        return obj_new;
     }
 
     function testArray(){
@@ -93,9 +87,13 @@ GameState.prototype.create = function () {
         for (var i = 0; i <= PlatformYarray; i++) {
             console.log(PlatformYarray[i]);
         }
-    }*/
+    }
 
     //TODO: call createLedges() with the components of the x- and y- arrays
+    createArrays(10);
+    console.log(testArray());
+
+};
 
 
 
