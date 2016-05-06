@@ -26,6 +26,9 @@ GameState.prototype.create = function () {
     this.JUMP_SPEED = -1000;
     //create player
     this.player = this.game.add.sprite(this.game.width/2, this.game.height - 90, 'player');
+    //add player movement animations;
+    this.player.animations.add('left', [0,1,2,3], 10, true);
+    this.player.animations.add('right', [5,6,7,8], 10, true);
 
     //physics
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -107,10 +110,15 @@ GameState.prototype.create = function () {
      //controls
      if (this.leftInputIsActive()) {
          this.player.body.acceleration.x = -this.ACCELERATION;
+         this.player.animations.play('left');
      } else if (this.rightInputIsActive()) {
          this.player.body.acceleration.x = this.ACCELERATION;
+         this.player.animations.play('right');
      } else {
          this.player.body.acceleration.x = 0;
+         this.player.animations.stop();
+         //we need to do this to display the static position when standing
+         this.player.frame = 4;
      }
 
      //check whether the player is on the ground
@@ -132,6 +140,7 @@ GameState.prototype.leftInputIsActive = function(){
 
     return isActive;
 };
+
 
 GameState.prototype.rightInputIsActive = function(){
     var isActive = false;
