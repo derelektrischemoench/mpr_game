@@ -43,6 +43,8 @@ GameState.prototype.create = function () {
         this.ground.add(groundBlock);
     }
 
+
+
     //controls:
     this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.LEFT,
@@ -51,25 +53,6 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-
-
-
-
-
-
-    //create ground
-    /*this.ground = this.game.add.group();
-    for(var x = 0; x < 10; x += 32){
-
-    for(var x = 0; x < 10; x += 32){ //Add ground, enable physics, make blocks static
-        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-        groundBlock.body.immovable = false;//this allows the player to push the bloks away
-        groundBlock.body.allowGravity = false;//setting this makes the blocks fall when the player touches them
-        groundBlock.collideWorldBounds = true;
-
-        //this.ground.add(groundBlock);//setting this makes the player unable to move
-    }*/
 };
 
 
