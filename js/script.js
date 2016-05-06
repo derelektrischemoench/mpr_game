@@ -22,6 +22,8 @@ GameState.prototype.create = function () {
     this.MAX_SPEED = 500; //px/s
     this.ACCELERATION = 1500; //px/s/s
     this.DRAG = 900; //px/s
+    this.GRAVITY = 2600;
+    this.JUMP_SPEED = -1000;
     //create player
     this.player = this.game.add.sprite(this.game.width/2, this.game.height - 90, 'player');
 
@@ -29,9 +31,13 @@ GameState.prototype.create = function () {
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     //make player collide with the boundaries of the game
     this.player.body.collideWorldBounds = true;
-    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED);
+    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);
 
     this.player.body.drag.setTo(this.DRAG,0);
+
+    //gravity:
+    game.physics.arcade.gravity.y = this.GRAVITY;
+
 
     this.ground = this.game.add.group();
     for(var x = 0; x < this.game.width; x += 32) {
@@ -106,6 +112,11 @@ GameState.prototype.create = function () {
      } else {
          this.player.body.acceleration.x = 0;
      }
+
+     //check whether the player is on the ground
+     var onTheGround = this.player.body.touching.down;
+     //console.log(onTheGround);
+     
  };
 
 //Player-left movement:
