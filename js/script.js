@@ -70,28 +70,35 @@ GameState.prototype.create = function () {
 
 
     function createArrays(platformarrayLength){
-        var PlatformYarray = new Array();
-        //array that holds the y coordinates
-        PlatformYarray[0] =  game.rnd.integerInRange(10,20);
+        PlatformYarray = new Array(platformarrayLength);
+        PlatformYarray[0] = game.rnd.integerInRange(0,5);
+        var a = 2;
+        var b = 4;
 
-        for (var i = 1; i < PlatformYarray; i++) {
-            var obj = PlatformYarray[i-1];
-            var obj_new = obj + game.rnd.integerInRange(10,20);
-            PlatformYarray[i]=obj_new;
+        for (var i = 0; i < PlatformYarray.length; i++) {
+            PlatformYarray[i] = game.rnd.integerInRange(a,b);
+            a = a+game.rnd.integerInRange(1,10)*10;
+            b = b+game.rnd.integerInRange(1,10)*10;
         }
 
     }
 
-    function testArray(){
-        //test
-        for (var i = 0; i <= PlatformYarray; i++) {
-            console.log(PlatformYarray[i]);
-        }
+
+
+    createArrays(11); //at least this works
+    console.log("The array is " + PlatformYarray.length + ' slots long') ;
+
+    //print the contents of the array to the console
+    for (var i = 0; i < PlatformYarray.length; i++) {
+        var obj = PlatformYarray[i];
+        console.log(obj);
     }
 
-    //TODO: call createLedges() with the components of the x- and y- arrays
-    createArrays(10);
-    console.log(testArray());
+
+    this.game.add.sprite(PlatformYarray[1], PlatformYarray[2], 'block');//assign ze graphix
+    this.game.add.sprite(PlatformYarray[3], PlatformYarray[4], 'block');
+    this.game.add.sprite(PlatformYarray[5], PlatformYarray[6], 'block');
+
 
 };
 
