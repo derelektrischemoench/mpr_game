@@ -94,7 +94,6 @@ GameState.prototype.create = function () {
         console.log(obj);
     }
 
-
     this.game.add.sprite(PlatformYarray[1], PlatformYarray[2], 'block');//assign ze graphix
     this.game.add.sprite(PlatformYarray[3], PlatformYarray[4], 'block');
     this.game.add.sprite(PlatformYarray[5], PlatformYarray[6], 'block');
