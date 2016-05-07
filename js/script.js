@@ -36,7 +36,6 @@ GameState.prototype.create = function () {
     //make player collide with the boundaries of the game
     this.player.body.collideWorldBounds = true;
     this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);
-
     this.player.body.drag.setTo(this.DRAG,0);
 
     //gravity:
@@ -61,13 +60,6 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-    function createLedges(random_platform_x, random_platform_y) {
-        var block;
-        block = platforms.create(random_platform_x, random_platform_y, 'block');//block because we need to link it to the spritesheet
-        block.body.immovable = true;
-        console.log("A platform has been created since the function has been called");
-    }
-
 
     function createArrays(platformarrayLength){
         PlatformYarray = new Array(platformarrayLength);
@@ -88,15 +80,15 @@ GameState.prototype.create = function () {
     createArrays(11); //at least this works
     console.log("The array is " + PlatformYarray.length + ' slots long') ;
 
-    //print the contents of the array to the console
-    for (var i = 0; i < PlatformYarray.length; i++) {
-        var obj = PlatformYarray[i];
-        console.log(obj);
-    }
 
-    this.game.add.sprite(PlatformYarray[1], PlatformYarray[2], 'block');//assign ze graphix
-    this.game.add.sprite(PlatformYarray[3], PlatformYarray[4], 'block');
-    this.game.add.sprite(PlatformYarray[5], PlatformYarray[6], 'block');
+    //tryout with groups
+    this.platforms = this.add.physicsGroup();
+
+    this.platforms.create(0,350, 'block');
+
+    this.platforms.setAll('body.allowGravity', false);
+    this.platforms.setAll('body.immovable', true);
+
 
 
 };
@@ -110,6 +102,7 @@ GameState.prototype.create = function () {
  GameState.prototype.update = function() {
      //collission checking
      this.game.physics.arcade.collide(this.player, this.ground);
+     this.game.physics.arcade.collide(this.player, this.platforms);
 
      //controls
      if (this.leftInputIsActive()) {
@@ -166,6 +159,8 @@ GameState.prototype.upInputIsActive = function(duration){
 
     return isActive;
 
+//enable collission with platforms
+    this.game.physics.arcade.collide(block, player);
 };
 
 var game = new Phaser.Game(848,450, Phaser.AUTO, 'game');
