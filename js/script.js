@@ -17,7 +17,7 @@ GameState.prototype.preload = function(){
 };
 
 GameState.prototype.create = function () {
-    this.game.add.sprite(0,0, 'map');
+    //this.game.add.sprite(0,0, 'map');
 
     //movement:
     this.MAX_SPEED = 500; //px/s
