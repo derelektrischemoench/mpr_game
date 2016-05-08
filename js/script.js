@@ -87,6 +87,9 @@ GameState.prototype.create = function () {
     this.platforms.create(0,350, 'block');
     this.platforms.create(100,200, 'block');
     this.platforms.create(200,100, 'block');
+    this.platforms.create(300, 450, 'block');
+    this.platforms.create(150, 550, 'block');
+    this.platforms.create(300, 650, 'block');
 
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
@@ -165,7 +168,7 @@ GameState.prototype.upInputIsActive = function(duration){
     this.game.physics.arcade.collide(block, player);
 };
 
-var game = new Phaser.Game(848,450, Phaser.AUTO, 'game');
+var game = new Phaser.Game(848,750, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
 
 
