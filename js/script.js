@@ -1,7 +1,5 @@
 //TODO: change size of platforms, manage random platform creation to prevent overlays
 //TODO: Determine the players position at a certain point in time and create platforms based on those properties
-// TODO: first though; manage spacing between platforms
-//TODO: create data structures to hold platform values
 
 var GameState = function (game) {    
 };
