@@ -58,40 +58,20 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-
-    function createArrays(platformarrayLength){
-        PlatformYarray = new Array(platformarrayLength);
-        PlatformYarray[0] = game.rnd.integerInRange(0,5);
-        var a = 2;
-        var b = 4;
-
-        for (var i = 0; i < PlatformYarray.length; i++) {
-            PlatformYarray[i] = game.rnd.integerInRange(a,b);
-            a = a+game.rnd.integerInRange(1,10)*10;
-            b = b+game.rnd.integerInRange(1,10)*10;
-        }
-
-    }
-
-
-
-    createArrays(11); //at least this works
-    console.log("The array is " + PlatformYarray.length + ' slots long') ;
-
-
     //tryout with groups
     this.platforms = this.add.physicsGroup();
 
-    this.platforms.create(0,350, 'block');
-    this.platforms.create(100,200, 'block');
-    this.platforms.create(200,100, 'block');
-    this.platforms.create(300, 450, 'block');
+    this.platforms.create(0,110, 'block');
+    this.platforms.create(100,180, 'block');
+    this.platforms.create(200,220, 'block');
+    this.platforms.create(300, 350, 'block');
     this.platforms.create(150, 550, 'block');
-    this.platforms.create(300, 650, 'block');
+
 
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
 
+   
 
 
 };
@@ -131,6 +111,7 @@ GameState.prototype.create = function () {
     this.platforms.forEachAlive(function (platform) {
         platform.body.y += 0.5;
     });
+
 
 
  };//END UPDATE
