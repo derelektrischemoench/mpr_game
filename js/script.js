@@ -67,7 +67,6 @@ GameState.prototype.create = function () {
     this.platforms.create(300, 350, 'block');
     this.platforms.create(150, 550, 'block');
 
-
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
 
