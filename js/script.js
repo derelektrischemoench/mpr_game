@@ -127,8 +127,22 @@ GameState.prototype.create = function () {
      if(onTheGround && this.upInputIsActive()){
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
+     
+     //Move platform group downwards
+     //todo: add the function that moves the platforms downwards here we declared somewhere else to call it continually
+    this.platforms.forEachAlive(function (platform) {
+        platform.body.y += 0.5;
+    });
+     
 
- };
+ };//END UPDATE
+
+
+
+
+
+
+
 
 //Player-left movement:
 GameState.prototype.leftInputIsActive = function(){
@@ -163,7 +177,7 @@ GameState.prototype.upInputIsActive = function(duration){
     return isActive;
 
 //enable collission with platforms
-    this.game.physics.arcade.collide(block, player);
+    //this.game.physics.arcade.collide(block, player);
 };
 
 var game = new Phaser.Game(848,750, Phaser.AUTO, 'game');
