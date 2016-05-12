@@ -96,8 +96,6 @@ GameState.prototype.create = function () {
 
 };
 
-
-
     /****************************************************************************************************************/
     /*                      Player related settings and controls                                                                  /
     /************************************************************************************************************** */
@@ -133,7 +131,7 @@ GameState.prototype.create = function () {
     this.platforms.forEachAlive(function (platform) {
         platform.body.y += 0.5;
     });
-     
+
 
  };//END UPDATE
 
