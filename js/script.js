@@ -62,10 +62,7 @@ GameState.prototype.create = function () {
     this.platforms = this.add.physicsGroup();
 
     this.platforms.create(0,110, 'block');
-    this.platforms.create(100,180, 'block');
-    this.platforms.create(200,220, 'block');
-    this.platforms.create(300, 350, 'block');
-    this.platforms.create(150, 550, 'block');
+
 
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
@@ -104,6 +101,15 @@ GameState.prototype.create = function () {
      if(onTheGround && this.upInputIsActive()){
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
+
+     PlatformCallTimer = function (duration) {
+         //TODO: write a timer that calls the create platform function after a
+         //specified time
+         this.timer = new game.timer(duration);
+         //this.timer. WHATEVER, but: Set the timer here
+         //after the timer is 0 call create platform with y = 0 and x = random
+         //.... this might just work, damn
+     };
      
      //Move platform group downwards
      //todo: add the function that moves the platforms downwards here we declared somewhere else to call it continually
