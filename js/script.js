@@ -62,6 +62,7 @@ GameState.prototype.create = function () {
     this.platforms = this.add.physicsGroup();
 
     this.platforms.create(0,110, 'block');
+    this.platforms.create(50,30, 'block');
 
 
     this.platforms.setAll('body.allowGravity', false);
@@ -113,9 +114,19 @@ GameState.prototype.create = function () {
      
      //Move platform group downwards
      //todo: add the function that moves the platforms downwards here we declared somewhere else to call it continually
+     //todo: add a kill function for each platform on screen leave
     this.platforms.forEachAlive(function (platform) {
         platform.body.y += 0.5;
     });
+
+     //kill function for platform ooB
+     this.platforms.forEachAlive(function (platform){
+         if (platform.body.y > game.world.height){
+             platform.kill();
+             console.log("platform killed");
+         }
+
+     })
 
 
 
