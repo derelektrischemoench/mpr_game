@@ -1,4 +1,4 @@
-//TODO: change size of platforms, manage random platform creation to prevent overlays
+//TODO: change size of platforms, manage random platform creation in a function that gets called dynamically
 //TODO: Determine the players position at a certain point in time and create platforms based on those properties
 
 var GameState = function (game) {    
@@ -113,8 +113,7 @@ GameState.prototype.create = function () {
      };
      
      //Move platform group downwards
-     //todo: add the function that moves the platforms downwards here we declared somewhere else to call it continually
-     //todo: add a kill function for each platform on screen leave
+
     this.platforms.forEachAlive(function (platform) {
         platform.body.y += 0.5;
     });
