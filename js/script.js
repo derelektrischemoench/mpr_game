@@ -64,12 +64,15 @@ GameState.prototype.create = function () {
     this.platforms.create(0,110, 'block');
     this.platforms.create(50,30, 'block');
 
+    createPlatform = function(platform_x) {
+        game.platforms.create(platform_x,50, 'block');
+        console.log("platform created");
+    };
+
+    //this.game.time.events.loop(2000, this.platforms.create(50,50, 'block'));
 
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
-
-   
-
 
 };
 
@@ -103,16 +106,8 @@ GameState.prototype.create = function () {
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
 
-     PlatformCallTimer = function (duration) {
-         //TODO: write a timer that calls the create platform function after a
-         //specified time
-         this.timer = new game.timer(duration);
-         //this.timer. WHATEVER, but: Set the timer here
-         //after the timer is 0 call create platform with y = 0 and x = random
-         //.... this might just work, damn
-     };
-     
-     //Move platform group downwards
+
+//Move platform group downwards
 
     this.platforms.forEachAlive(function (platform) {
         platform.body.y += 0.5;
@@ -124,17 +119,9 @@ GameState.prototype.create = function () {
              platform.kill();
              console.log("platform killed");
          }
-
      })
 
-
-
  };//END UPDATE
-
-
-
-
-
 
 
 
@@ -169,32 +156,7 @@ GameState.prototype.upInputIsActive = function(duration){
                 this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
 
     return isActive;
-
-//enable collission with platforms
-    //this.game.physics.arcade.collide(block, player);
 };
 
 var game = new Phaser.Game(848,750, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
