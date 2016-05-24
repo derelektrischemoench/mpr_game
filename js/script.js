@@ -1,7 +1,4 @@
-//TODO: change size of platforms, manage random platform creation in a function that gets called dynamically
-//TODO: Determine the players position at a certain point in time and create platforms based on those properties
-
-var GameState = function (game) {    
+var GameState = function (game) {
 };
 
 //load assets
@@ -73,6 +70,15 @@ GameState.prototype.create = function () {
 
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
+
+    //scaling
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.maxWidth = this.game.width;
+    this.scale.maxHeight = this.game.height;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+    this.scale.setScreenSize( true );
+
 
 };
 
