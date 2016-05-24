@@ -6,7 +6,7 @@ GameState.prototype.preload = function(){
 
     this.game.load.image('map', 'assets/map.png'); // thjs is the background
     this.game.load.image('ground', 'assets/block.png');//this is the ground
-    this.game.load.image('block', 'assets/platform.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
+    this.game.load.image('block', 'assets/pixel_1.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
     this.game.load.spritesheet('player', 'assets/dude.png', 32, 48);
 
 };
@@ -22,6 +22,11 @@ GameState.prototype.create = function () {
     this.JUMP_SPEED = -1000;
     //create player
     this.player = this.game.add.sprite(this.game.width/2, this.game.height - 90, 'player');
+    this.player.anchor.set(0.5);
+
+    this.player.yOrig = this.player.y;
+    this.player.yChange = 0;
+
     //add player movement animations;
     this.player.animations.add('left', [0,1,2,3], 10, true);
     this.player.animations.add('right', [5,6,7,8], 10, true);
@@ -33,8 +38,14 @@ GameState.prototype.create = function () {
     this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);
     this.player.body.drag.setTo(this.DRAG,0);
 
+    this.physics.arcade.enable(this.player);
+    this.player.body.gravity.y = 500;
+    this.player.body.checkCollision.up = false;
+    this.player.body.checkCollision.left = false;
+    this.player.body.checkCollision.right = false;
+
     //gravity:
-    game.physics.arcade.gravity.y = this.GRAVITY;
+    //game.physics.arcade.gravity.y = this.GRAVITY;
 
 
     this.ground = this.game.add.group();
@@ -81,6 +92,7 @@ GameState.prototype.create = function () {
  GameState.prototype.update = function() {
      //collission checking
      this.game.physics.arcade.collide(this.player, this.ground);
+     this.game.physics.arcade.collide(this.player, this.platforms);
 
      //controls
      if (this.leftInputIsActive()) {
@@ -99,16 +111,56 @@ GameState.prototype.create = function () {
      //check whether the player is on the ground
      var onTheGround = this.player.body.touching.down;
      //console.log(onTheGround);
-     if(onTheGround && this.upInputIsActive()){
+     if (onTheGround && this.upInputIsActive()) {
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
 
+     this.world.setBounds(0, -this.player.yChange, this.world.width, this.game.height + this.player.yChange);
 
+     /*this.cameraYMin = Math.min( this.cameraYMin, this.hero.y - this.game.height + 130 );
+      this.camera.y = this.cameraYMin;*/
 
-     this.world.setBounds( 0, -this.player.yChange, this.world.width, this.game.height + this.player.yChange );
+     this.platforms.forEachAlive(function (elem) {
+         this.platformYMin = Math.min(this.platformYMin, elem.y);
+         if (elem.y > this.camera.y + this.game.height) {
+             elem.kill();
+             this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
+         }
+     }, this);
+ },
+     
+     GameState.prototype.shutdown = function () {
+         this.world.setBounds( 0, 0, this.game.width, this.game.height );
+         this.cursor = null;
+         this.player.destroy();
+         this.player = null;
+         this.platforms.destroy();
+         this.platforms = null;
+         
+     },
 
- };//END UPDATE
+     GameState.prototype.platformsCreate = function(){
+         //FUCK EVERYTHING
+         this.platforms = this.add.group();
+         this.platforms.enableBody = true;
+         this.platforms.createMultiple( 10, 'block' );
 
+         // create the base platform, with buffer on either side so that the hero doesn't fall through
+         this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
+         // create a batch of platforms that start to move up the level
+         for( var i = 0; i < 9; i++ ) {
+             this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 50 );
+         }
+     },
+
+     GameState.prototype.platformsCreateOne = function( x, y) {
+    // this is a helper function since writing all of this out can get verbose elsewhere
+    var platform = this.platforms.getFirstDead();
+    platform.reset( x, y );
+    platform.scale.y = 16;
+    platform.body.immovable = true;
+    return platform;
+     };
 
 
 //Player-left movement:
