@@ -113,7 +113,7 @@ GameState.prototype.create = function () {
         platform.body.y += 0.5;
     });
 
-     //kill function for platform ooB
+     //kill function for platform oOB
      this.platforms.forEachAlive(function (platform){
          if (platform.body.y > game.world.height){
              platform.kill();
