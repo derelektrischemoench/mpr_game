@@ -79,6 +79,10 @@ GameState.prototype.create = function () {
     this.scale.pageAlignVertically = true;
     this.scale.setScreenSize( true );
 
+    //camera
+    this.cameraYMin = 99999;
+    this.platformYMin = 99999;
+
 
 };
 
@@ -125,7 +129,9 @@ GameState.prototype.create = function () {
              platform.kill();
              console.log("platform killed");
          }
-     })
+     });
+
+     this.world.setBounds( 0, -this.player.yChange, this.world.width, this.game.height + this.player.yChange );
 
  };//END UPDATE
 
