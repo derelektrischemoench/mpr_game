@@ -39,7 +39,7 @@ GameState.prototype.create = function () {
     this.player.body.drag.setTo(this.DRAG,0);
 
     this.physics.arcade.enable(this.player);
-    this.player.body.gravity.y = 500;
+    this.player.body.gravity.y = this.GRAVITY;
     this.player.body.checkCollision.up = false;
     this.player.body.checkCollision.left = false;
     this.player.body.checkCollision.right = false;
