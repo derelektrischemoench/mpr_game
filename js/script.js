@@ -55,21 +55,6 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-    //tryout with groups
-    this.platforms = this.add.physicsGroup();
-
-    this.platforms.create(0,110, 'block');
-    this.platforms.create(50,30, 'block');
-
-    createPlatform = function(platform_x) {
-        game.platforms.create(platform_x,50, 'block');
-        console.log("platform created");
-    };
-
-    //this.game.time.events.loop(2000, this.platforms.create(50,50, 'block'));
-
-    this.platforms.setAll('body.allowGravity', false);
-    this.platforms.setAll('body.immovable', true);//disable this, the platforms will fall
 
     //scaling
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -83,6 +68,9 @@ GameState.prototype.create = function () {
     this.cameraYMin = 99999;
     this.platformYMin = 99999;
 
+    //create platforms
+    this.platformsCreate();
+
 
 };
 
@@ -93,7 +81,6 @@ GameState.prototype.create = function () {
  GameState.prototype.update = function() {
      //collission checking
      this.game.physics.arcade.collide(this.player, this.ground);
-     this.game.physics.arcade.collide(this.player, this.platforms);
 
      //controls
      if (this.leftInputIsActive()) {
@@ -117,19 +104,6 @@ GameState.prototype.create = function () {
      }
 
 
-//Move platform group downwards
-
-    this.platforms.forEachAlive(function (platform) {
-        platform.body.y += 0.5;
-    });
-
-     //kill function for platform oOB
-     this.platforms.forEachAlive(function (platform){
-         if (platform.body.y > game.world.height){
-             platform.kill();
-             console.log("platform killed");
-         }
-     });
 
      this.world.setBounds( 0, -this.player.yChange, this.world.width, this.game.height + this.player.yChange );
 
