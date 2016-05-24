@@ -43,6 +43,9 @@ GameState.prototype.create = function () {
     this.player.body.checkCollision.up = false;
     this.player.body.checkCollision.left = false;
     this.player.body.checkCollision.right = false;
+    
+    //call the platform create function from earlier
+    this.platformsCreate();
 
     //gravity:
     //game.physics.arcade.gravity.y = this.GRAVITY;
@@ -153,10 +156,11 @@ GameState.prototype.create = function () {
          }
      },
 
-     GameState.prototype.platformsCreateOne = function( x, y) {
+     GameState.prototype.platformsCreateOne = function( x, y, width) {
     // this is a helper function since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
     platform.reset( x, y );
+    platform.scale.x = width;
     platform.scale.y = 16;
     platform.body.immovable = true;
     return platform;
