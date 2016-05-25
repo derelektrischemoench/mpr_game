@@ -145,7 +145,7 @@ GameState.prototype.create = function () {
          this.platforms = this.add.group();
          this.platforms.enableBody = true;
          //the first parameter here changes the amount of platforms, but you have to change
-         //atm this only produces a max of 7 platforms... y?
+
          var numberofPlatforms = 8;
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
@@ -161,7 +161,7 @@ GameState.prototype.create = function () {
      GameState.prototype.platformsCreateOne = function( x, y, width) {
     // this is a helper function since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
-    platform.reset( x, y );
+    platform.reset(x,y);
     platform.scale.x = width;
     platform.scale.y = 16;
     platform.body.immovable = true;
