@@ -144,12 +144,15 @@ GameState.prototype.create = function () {
          //FUCK EVERYTHING
          this.platforms = this.add.group();
          this.platforms.enableBody = true;
-         this.platforms.createMultiple( 10, 'block' );
+         //the first parameter here changes the amount of platforms, but you have to change
+         //atm this only produces a max of 7 platforms... y?
+         var numberofPlatforms = 8;
+         this.platforms.createMultiple( numberofPlatforms, 'block' );
 
          // create the base platform, with buffer on either side so that the hero doesn't fall through
          this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
          // create a batch of platforms that start to move up the level
-         for( var i = 0; i < 9; i++ ) {
+         for( var i = 0; i < numberofPlatforms; i++ ) {
              //modify the last parameter in this line to change the width of the platforms
              this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 100 );
          }
