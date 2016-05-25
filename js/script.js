@@ -162,6 +162,8 @@ GameState.prototype.create = function () {
     // this is a helper function since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
 
+         //should this turn out to be backstabby later on, simply remov the if statement and only write the codeblock
+
          if(platform) {
              platform.reset(x, y);
              platform.scale.x = width;
