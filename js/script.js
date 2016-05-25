@@ -161,11 +161,14 @@ GameState.prototype.create = function () {
      GameState.prototype.platformsCreateOne = function( x, y, width) {
     // this is a helper function since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
-    platform.reset(x,y);
-    platform.scale.x = width;
-    platform.scale.y = 16;
-    platform.body.immovable = true;
-    return platform;
+
+         if(platform) {
+             platform.reset(x, y);
+             platform.scale.x = width;
+             platform.scale.y = 16;
+             platform.body.immovable = true;
+             return platform;
+         }
      };
 
 
