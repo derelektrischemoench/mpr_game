@@ -38,19 +38,15 @@ GameState.prototype.create = function () {
     this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10);
     this.player.body.drag.setTo(this.DRAG,0);
 
-    this.physics.arcade.enable(this.player);
+
     this.player.body.gravity.y = this.GRAVITY;
     this.player.body.checkCollision.up = false;
-    this.player.body.checkCollision.left = false;
-    this.player.body.checkCollision.right = false;
+    //this.player.body.checkCollision.left = false;
+    //this.player.body.checkCollision.right = false;
     
-    //call the platform create function from earlier
-    this.platformsCreate();
-
-    //gravity:
-    //game.physics.arcade.gravity.y = this.GRAVITY;
 
 
+    //create floor
     this.ground = this.game.add.group();
     for(var x = 0; x < this.game.width; x += 32) {
         // Add the ground blocks, enable physics on each, make them immovable
@@ -60,6 +56,9 @@ GameState.prototype.create = function () {
         groundBlock.body.allowGravity = false;
         this.ground.add(groundBlock);
     }
+
+    //create platforms
+    this.platformsCreate();
 
     //controls:
     this.game.input.keyboard.addKeyCapture([
@@ -82,8 +81,7 @@ GameState.prototype.create = function () {
     this.cameraYMin = 99999;
     this.platformYMin = 99999;
 
-    //create platforms
-    this.platformsCreate();
+
 
 
 };
@@ -94,8 +92,8 @@ GameState.prototype.create = function () {
 
  GameState.prototype.update = function() {
      //collission checking
-     this.game.physics.arcade.collide(this.player, this.ground);
-     this.game.physics.arcade.collide(this.player, this.platforms);
+     this.physics.arcade.collide(this.player, this.ground);
+     this.physics.arcade.collide(this.player, this.platforms);
 
      //controls
      if (this.leftInputIsActive()) {
@@ -152,7 +150,8 @@ GameState.prototype.create = function () {
          this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
          // create a batch of platforms that start to move up the level
          for( var i = 0; i < 9; i++ ) {
-             this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 50 );
+             //modify the last parameter in this line to change the width of the platforms
+             this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 100 );
          }
      },
 
