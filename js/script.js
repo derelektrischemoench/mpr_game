@@ -128,7 +128,7 @@ GameState.prototype.create = function () {
              this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
          }
      }, this);
- },
+ }, 
      
      GameState.prototype.shutdown = function () {
          this.world.setBounds( 0, 0, this.game.width, this.game.height );
