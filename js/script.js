@@ -177,7 +177,7 @@ GameState.prototype.platformsCreateOne = function( x, y, width) {
 
 GameState.prototype.destructionCounter = function(){
     //this sets a timer that calls the floor destruction method after a while
-    game.time.events.add(Phaser.Timer.SECOND * 5, this.destroyFloor, this);
+    game.time.events.add(Phaser.Timer.SECOND * 10, this.destroyFloor, this);
 };
 
 GameState.prototype.destroyFloor = function () {
