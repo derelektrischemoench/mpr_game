@@ -157,7 +157,7 @@ GameState.prototype.create = function () {
      };
 
      GameState.prototype.platformsCreateOne = function( x, y, width) {
-    // this is a helper function since writing all of this out can get verbose elsewhere
+    // this is a helper fnction since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
 
          //should this turn out to be backstabby later on, simply remove the if statement and only write the codeblock
