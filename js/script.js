@@ -129,7 +129,8 @@ GameState.prototype.create = function () {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
-             this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
+             //console.log("platform killed"); as of now this works
+             //this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
          }
      }, this);
  };
@@ -143,7 +144,7 @@ GameState.prototype.create = function () {
 
 
          //determine the number of platforms you want to create (the wide ones)
-         var numberofPlatforms = 100;
+         var numberofPlatforms = 1000;
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
          // create the base platform, with buffer on either side so that the hero doesn't fall through
