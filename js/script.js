@@ -144,8 +144,8 @@ GameState.prototype.create = function () {
          //FUCK EVERYTHING
          this.platforms = this.add.group();
          this.platforms.enableBody = true;
-         //the first parameter here changes the amount of platforms, but you have to change
 
+         //determine the number of platforms you want to create
          var numberofPlatforms = 8;
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
