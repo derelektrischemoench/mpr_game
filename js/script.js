@@ -132,7 +132,7 @@ GameState.prototype.create = function () {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
-             console.log("platform killed");
+             
          }
      }, this);
 
@@ -188,9 +188,17 @@ GameState.prototype.destroyFloor = function () {
 };
 
 GameState.prototype.die = function () {
+
+    preload = function () {
+        this.game.load.image('fail', './assets/Cat.png');
+    };
+    //mae the player die
     if(this.player.y > 725){
         console.log("you have died");
-    }
+        game.state.add('game', GameState, true);
+    };
+    
+    
 };
 
 
