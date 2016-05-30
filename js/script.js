@@ -57,6 +57,9 @@ GameState.prototype.create = function () {
         this.ground.add(groundBlock);
     }
 
+
+
+    //console.log("this is the players y pos" + this.player.y);
     //create platforms
     this.platformsCreate();
 
@@ -82,8 +85,8 @@ GameState.prototype.create = function () {
     this.platformYMin = 99999;
 
 
-
-
+    //trigger the counter which destroys the floor
+    this.destructionCounter();
 };
 
     /****************************************************************************************************************/
@@ -137,7 +140,7 @@ GameState.prototype.create = function () {
      
 
 
-     GameState.prototype.platformsCreate = function(){
+GameState.prototype.platformsCreate = function(){
          //FUCK EVERYTHING
          this.platforms = this.add.group();
          this.platforms.enableBody = true;
@@ -148,7 +151,7 @@ GameState.prototype.create = function () {
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
          // create the base platform, with buffer on either side so that the hero doesn't fall through
-         this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
+         //this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
          // create a batch of platforms that start to move up the level
          for( var i = 0; i < numberofPlatforms; i++ ) {
              //modify the last parameter in this line to change the width of the platforms
@@ -156,7 +159,7 @@ GameState.prototype.create = function () {
          }
      };
 
-     GameState.prototype.platformsCreateOne = function( x, y, width) {
+GameState.prototype.platformsCreateOne = function( x, y, width) {
     // this is a helper fnction since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
 
@@ -171,6 +174,16 @@ GameState.prototype.create = function () {
              return platform;
          }
      };
+
+GameState.prototype.destructionCounter = function(){
+    //this sets a timer that calls the floor destruction method after a while
+    game.time.events.add(Phaser.Timer.SECOND * 5, this.destroyFloor, this);
+};
+
+GameState.prototype.destroyFloor = function () {
+    //this destroys the floor
+    this.ground.destroy();
+};
 
 
 //Player-left movement:
