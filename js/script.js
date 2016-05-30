@@ -8,6 +8,7 @@ GameState.prototype.preload = function(){
     this.game.load.image('ground', 'assets/block.png');//this is the ground
     this.game.load.image('block', 'assets/pixel_1.png');//this is the image for the platforms, the block argument in the create function below links the sprite to the platform
     this.game.load.spritesheet('player', 'assets/dude.png', 32, 48);
+    this.game.load.image('cat', 'assets/cat.png');
 
 };
 
@@ -188,16 +189,14 @@ GameState.prototype.destroyFloor = function () {
 };
 
 GameState.prototype.die = function () {
-
-    preload = function () {
-        this.game.load.image('fail', './assets/Cat.png');
-    };
-    //mae the player die
+    //make the player die
     if(this.player.y > 725){
-        console.log("you have died");
-        game.state.add('game', GameState, true);
-    };
-    
+        this.game.add.sprite(250,200,'cat');
+        //console.log("you have died");
+        this.player.destroy();
+        this.platforms.destroy();
+
+    }
     
 };
 
@@ -235,15 +234,6 @@ GameState.prototype.upInputIsActive = function(duration){
     return isActive;
 };
 
-GameState.prototype.shutdown = function () {
-    this.world.setBounds( 0, 0, this.game.width, this.game.height );
-    this.cursor = null;
-    this.player.destroy();
-    this.player = null;
-    this.platforms.destroy();
-    this.platforms = null;
-
-};
 
 var game = new Phaser.Game(848,750, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
