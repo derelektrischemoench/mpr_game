@@ -87,6 +87,8 @@ GameState.prototype.create = function () {
 
     //trigger the counter which destroys the floor
     this.destructionCounter();
+
+
 };
 
     /****************************************************************************************************************/
@@ -119,23 +121,23 @@ GameState.prototype.create = function () {
      //check whether the player is on the ground
      var onTheGround = this.player.body.touching.down;
      //console.log(onTheGround);
-     if (onTheGround && this.upInputIsActive()) {
+     if (onTheGround && this.upInputIsActive()){
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
 
      this.world.setBounds(0, -this.player.yChange, this.world.width, this.game.height + this.player.yChange);
 
-     /*this.cameraYMin = Math.min( this.cameraYMin, this.hero.y - this.game.height + 130 );
-      this.camera.y = this.cameraYMin;*/
 
      this.platforms.forEachAlive(function (elem) {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
-             //console.log("platform killed"); as of now this works
-             //this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
+             console.log("platform killed");
          }
      }, this);
+
+     //make player die on ground contact
+     this.die();
  };
      
 
@@ -183,6 +185,12 @@ GameState.prototype.destructionCounter = function(){
 GameState.prototype.destroyFloor = function () {
     //this destroys the floor
     this.ground.destroy();
+};
+
+GameState.prototype.die = function () {
+    if(this.player.y > 725){
+        console.log("you have died");
+    }
 };
 
 
