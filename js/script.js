@@ -152,7 +152,7 @@ GameState.prototype.create = function () {
          // create a batch of platforms that start to move up the level
          for( var i = 0; i < numberofPlatforms; i++ ) {
              //modify the last parameter in this line to change the width of the platforms
-             this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 100 );
+             this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 65 ), this.world.height - 100 - 100 * i, 160 );
          }
      };
 
