@@ -142,8 +142,8 @@ GameState.prototype.create = function () {
          this.platforms.enableBody = true;
 
 
-         //determine the number of platforms you want to create
-         var numberofPlatforms = 8;
+         //determine the number of platforms you want to create (the wide ones)
+         var numberofPlatforms = 100;
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
          // create the base platform, with buffer on either side so that the hero doesn't fall through
