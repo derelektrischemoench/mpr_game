@@ -128,17 +128,9 @@ GameState.prototype.create = function () {
              this.platformsCreateOne(this.rnd.integerInRange(0, this.world.width - 50), this.platformYMin - 100, 50);
          }
      }, this);
- }, 
+ };
      
-     GameState.prototype.shutdown = function () {
-         this.world.setBounds( 0, 0, this.game.width, this.game.height );
-         this.cursor = null;
-         this.player.destroy();
-         this.player = null;
-         this.platforms.destroy();
-         this.platforms = null;
-         
-     },
+
 
      GameState.prototype.platformsCreate = function(){
          //FUCK EVERYTHING
@@ -156,7 +148,7 @@ GameState.prototype.create = function () {
              //modify the last parameter in this line to change the width of the platforms
              this.platformsCreateOne( this.rnd.integerInRange( 0, this.world.width - 50 ), this.world.height - 100 - 100 * i, 100 );
          }
-     },
+     };
 
      GameState.prototype.platformsCreateOne = function( x, y, width) {
     // this is a helper function since writing all of this out can get verbose elsewhere
@@ -206,6 +198,16 @@ GameState.prototype.upInputIsActive = function(duration){
                 this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
 
     return isActive;
+};
+
+GameState.prototype.shutdown = function () {
+    this.world.setBounds( 0, 0, this.game.width, this.game.height );
+    this.cursor = null;
+    this.player.destroy();
+    this.player = null;
+    this.platforms.destroy();
+    this.platforms = null;
+
 };
 
 var game = new Phaser.Game(848,750, Phaser.AUTO, 'game');
