@@ -95,6 +95,10 @@ GameState.prototype.create = function () {
      this.physics.arcade.collide(this.player, this.ground);
      this.physics.arcade.collide(this.player, this.platforms);
 
+     this.platforms.forEachAlive(function(platform){
+         platform.body.y += 1;
+     });
+
      //controls
      if (this.leftInputIsActive()) {
          this.player.body.acceleration.x = -this.ACCELERATION;
@@ -136,6 +140,7 @@ GameState.prototype.create = function () {
          //FUCK EVERYTHING
          this.platforms = this.add.group();
          this.platforms.enableBody = true;
+
 
          //determine the number of platforms you want to create
          var numberofPlatforms = 8;
