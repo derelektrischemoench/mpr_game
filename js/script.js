@@ -161,8 +161,6 @@ GameState.prototype.platformsCreate = function(){
          var numberofPlatforms = 1000;
          this.platforms.createMultiple( numberofPlatforms, 'block' );
 
-         // create the base platform, with buffer on either side so that the hero doesn't fall through
-         //this.platformsCreateOne( -16, this.world.height - 16, this.world.width + 16 );
          // create a batch of platforms that start to move up the level
          for( var i = 0; i < numberofPlatforms; i++ ) {
              //modify the last parameter in this line to change the width of the platforms
