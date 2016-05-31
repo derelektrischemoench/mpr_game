@@ -124,7 +124,6 @@ GameState.prototype.create = function () {
 
      //check whether the player is on the ground
      var onTheGround = this.player.body.touching.down;
-     //console.log(onTheGround);
      if (onTheGround && this.upInputIsActive()){
          this.player.body.velocity.y = this.JUMP_SPEED;
      }
@@ -136,9 +135,6 @@ GameState.prototype.create = function () {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
-             //console.log("platform killed")
-
-             //call the function that increases the score by one on each platform kill
              this.score();
          }
      }, this);
@@ -175,7 +171,7 @@ GameState.prototype.platformsCreate = function(){
      };
 
 GameState.prototype.platformsCreateOne = function( x, y, width) {
-    // this is a helper fnction since writing all of this out can get verbose elsewhere
+    // this is a helper function since writing all of this out can get verbose elsewhere
     var platform = this.platforms.getFirstDead();
 
          //should this turn out to be backstabby later on, simply remove the if statement and only write the codeblock
@@ -207,6 +203,7 @@ GameState.prototype.die = function () {
         //console.log("you have died");
         this.player.destroy();
         this.platforms.destroy();
+        this.game.debug.text("Game over. Your score is" + this.platformCounter, 20, 20);
 
     }
     
