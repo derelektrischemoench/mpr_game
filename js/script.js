@@ -199,7 +199,7 @@ GameState.prototype.destroyFloor = function () {
 GameState.prototype.die = function () {
     //make the player die
     if(this.player.y > 725){
-        this.game.add.sprite(250,200,'cat');
+        this.game.add.sprite(260,200,'cat');
         //console.log("you have died");
         this.player.destroy();
         this.platforms.destroy();
