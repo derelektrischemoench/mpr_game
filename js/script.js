@@ -136,8 +136,10 @@ GameState.prototype.create = function () {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
+             //console.log("platform killed")
+
+             //call the function that increases the score by one on each platform kill
              this.score();
-             console.log(this.platformCounter);
          }
      }, this);
 
@@ -147,6 +149,8 @@ GameState.prototype.create = function () {
 
 GameState.prototype.score = function(){
     this.platformCounter ++;
+    console.log(this.platformCounter);
+    this.game.debug.text(this.platformCounter, 20, 20);
 };
      
 
