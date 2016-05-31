@@ -203,10 +203,20 @@ GameState.prototype.die = function () {
         //console.log("you have died");
         this.player.destroy();
         this.platforms.destroy();
-        this.game.debug.text("Game over. Your score is" + this.platformCounter, 20, 20);
-
+        //this.game.debug.text("Game over. Your score is" + this.platformCounter, 20, 20);
+        this.displayText();
     }
     
+};
+
+GameState.prototype.displayText = function () {
+    this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY,this.platformCounter + "Punkte", {
+        font:"65px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+
+    this.text.anchor.setTo(0.5, 0.5);
 };
 
 
