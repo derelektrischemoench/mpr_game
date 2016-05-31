@@ -89,6 +89,9 @@ GameState.prototype.create = function () {
     //trigger the counter which destroys the floor
     this.destructionCounter();
 
+    //initialize Platformcounter
+    this.platformCounter = 0;
+
 
 };
 
@@ -133,13 +136,18 @@ GameState.prototype.create = function () {
          this.platformYMin = Math.min(this.platformYMin, elem.y);
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
-             
+             this.score();
+             console.log(this.platformCounter);
          }
      }, this);
 
      //make player die on ground contact
      this.die();
  };
+
+GameState.prototype.score = function(){
+    this.platformCounter ++;
+};
      
 
 
