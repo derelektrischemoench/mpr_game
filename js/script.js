@@ -201,8 +201,12 @@ GameState.prototype.die = function () {
         //console.log("you have died");
         this.player.destroy();
         this.platforms.destroy();
-        //this.game.debug.text("Game over. Your score is" + this.platformCounter, 20, 20);
+        this.game.debug.text("Game over. Your score is " + this.platformCounter, 20, 20);
+        localStorage.setItem('score', this.platformCounter);
+        console.log("Your score has been saved");
+        console.log(localStorage.getItem('score'));
         this.displayText();
+        //todo: call destroy game loop with delay
     }
     
 };
@@ -216,6 +220,8 @@ GameState.prototype.displayText = function () {
 
     this.text.anchor.setTo(0.5, 0.5);
 };
+
+
 
 
 //Player-left movement:
