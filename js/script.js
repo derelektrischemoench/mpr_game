@@ -72,7 +72,6 @@ GameState.prototype.create = function () {
         Phaser.Keyboard.DOWN
     ]);
 
-
     //scaling
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.maxWidth = this.game.width;
@@ -85,14 +84,11 @@ GameState.prototype.create = function () {
     this.cameraYMin = 99999;
     this.platformYMin = 99999;
 
-
     //trigger the counter which destroys the floor
     this.destructionCounter();
 
     //initialize Platformcounter
     this.platformCounter = 0;
-
-
 };
 
     /****************************************************************************************************************/
@@ -136,20 +132,34 @@ GameState.prototype.create = function () {
          if (elem.y > this.camera.y + this.game.height) {
              elem.kill();
              this.score();
+             this.platformCounter ++;
+             console.log(this.platformCounter);
          }
      }, this);
 
      //make player die on ground contact
      this.die();
+
+     //trigger increase difficulty function
+     this.increaseDiff();
  };
+
+GameState.prototype.increaseDiff = function(){
+    if (this.platformCounter > 10){this.platformIncreaseSpeed();}
+};
+
+GameState.prototype.platformIncreaseSpeed = function (speedincrease) {
+    this.platforms.forEachAlive(function(platform){
+        platform.body.y +=0.1;
+    })
+};
+
 
 GameState.prototype.score = function(){
     this.platformCounter ++;
     console.log(this.platformCounter);
     this.game.debug.text(this.platformCounter, 20, 20);
 };
-     
-
 
 GameState.prototype.platformsCreate = function(){
          //FUCK EVERYTHING
@@ -183,6 +193,7 @@ GameState.prototype.platformsCreateOne = function( x, y, width) {
              return platform;
          }
      };
+
 
 GameState.prototype.destructionCounter = function(){
     //this sets a timer that calls the floor destruction method after a while
@@ -220,6 +231,7 @@ GameState.prototype.die = function () {
 };
 
 GameState.prototype.displayText = function () {
+    //destroy game after the timer has expired
     this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY,this.platformCounter + "Punkte", {
         font:"65px Arial",
         fill: "#ff0044",
@@ -229,19 +241,14 @@ GameState.prototype.displayText = function () {
     this.text.anchor.setTo(0.5, 0.5);
 };
 
-//destroy game after the timer has expired
-
 GameState.prototype.destroyWorld = function() {
     //this.platforms.destroy;
     this.player.destroy();
     this.world.destroy();
 };
 
-
-
-
-//Player-left movement:
 GameState.prototype.leftInputIsActive = function(){
+    //Player-left movement:
     var isActive = false;
 
     isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
@@ -250,7 +257,6 @@ GameState.prototype.leftInputIsActive = function(){
 
     return isActive;
 };
-
 
 GameState.prototype.rightInputIsActive = function(){
     var isActive = false;
