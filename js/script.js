@@ -195,7 +195,6 @@ GameState.prototype.destroyFloor = function () {
 };
 
 GameState.prototype.die = function () {
-    //make the player die
     if(this.player.y > 725){
         this.game.add.sprite(260,200,'cat');
         //console.log("you have died");
@@ -203,14 +202,21 @@ GameState.prototype.die = function () {
         this.platforms.destroy();
         this.game.debug.text("Game over. Your score is " + this.platformCounter, 20, 20);
         localStorage.setItem('score', this.platformCounter);
-        console.log("Your score has been saved");
-        console.log(localStorage.getItem('score'));
-        this.displayText();
+
+        //************************************************************////
+        //***********************************************************/////
+        /**/console.log("Your score has been saved");               /////
+        /**/console.log(localStorage.getItem('score'));              ////
+        /**/this.displayText();                                      ///
+        /***********************************************************///
+        /***********************************************************///
+
 
         this.time.events.add(Phaser.Timer.SECOND * 10, this.destroyWorld, this);
         console.log("timer has expired");
     }
-    
+    //make the player die
+
 };
 
 GameState.prototype.displayText = function () {
