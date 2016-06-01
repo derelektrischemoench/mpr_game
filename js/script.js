@@ -89,6 +89,9 @@ GameState.prototype.create = function () {
 
     //initialize Platformcounter
     this.platformCounter = 0;
+
+    //start difficulty increase
+    this.time.events.repeat(Phaser.Timer.SECOND * 2, 10, this.platformIncreaseSpeed() );
 };
 
     /****************************************************************************************************************/
@@ -139,18 +142,11 @@ GameState.prototype.create = function () {
 
      //make player die on ground contact
      this.die();
-
-     //trigger increase difficulty function
-     this.increaseDiff();
  };
 
-GameState.prototype.increaseDiff = function(){
-    if (this.platformCounter > 10){this.platformIncreaseSpeed();}
-};
-
-GameState.prototype.platformIncreaseSpeed = function (speedincrease) {
+GameState.prototype.platformIncreaseSpeed = function () {
     this.platforms.forEachAlive(function(platform){
-        platform.body.y +=0.1;
+        this.platform.body.y +=0.5;
     })
 };
 
@@ -193,7 +189,6 @@ GameState.prototype.platformsCreateOne = function( x, y, width) {
              return platform;
          }
      };
-
 
 GameState.prototype.destructionCounter = function(){
     //this sets a timer that calls the floor destruction method after a while
