@@ -206,7 +206,9 @@ GameState.prototype.die = function () {
         console.log("Your score has been saved");
         console.log(localStorage.getItem('score'));
         this.displayText();
-        //todo: call destroy game loop with delay
+
+        this.time.events.add(Phaser.Timer.SECOND * 10, this.destroyWorld, this);
+        console.log("timer has expired");
     }
     
 };
@@ -219,6 +221,14 @@ GameState.prototype.displayText = function () {
     });
 
     this.text.anchor.setTo(0.5, 0.5);
+};
+
+//destroy game after the timer has expired
+
+GameState.prototype.destroyWorld = function() {
+    //this.platforms.destroy;
+    this.player.destroy();
+    this.world.destroy();
 };
 
 
