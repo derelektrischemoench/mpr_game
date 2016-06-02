@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=php-einfach', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=users', 'root', 'processwire');
 
 if(isset($_GET['login'])) {
     $email = $_POST['email'];

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=moep', 'root', 'processwire');
+$pdo = new PDO('mysql:host=localhost; dbname=moep', 'vagrant', 'processwire');
 ?>
 <!DOCTYPE html>
 <html>
