@@ -3,6 +3,7 @@
 <?php 
     session_start();
 ?>
+<?php include ("./password.php");?>
 <head>
     <meta charset="UTF-8">
     <title>DumbTrump Quiz</title>
@@ -16,6 +17,9 @@
         $rid = rand(1,3);
         $_SESSION['fid'] = $rid;
     ?>
+
+       <h1>Hier geht es zur Registrierung:</h1>
+       <a href="./registrieren.php">Klick</a>
        
    
         <h2>Herzlich Willkommen zum Dumbtrump-Quiz</h2>

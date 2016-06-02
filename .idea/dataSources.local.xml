@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - @vagrant" uuid="e18bb2e5-9569-4def-8d4c-7b7dc13e1bf1">
+      <secret-storage>master_key</secret-storage>
+      <user-name>processwire</user-name>
+      <ssh-properties>
+        <enabled>true</enabled>
+        <proxy-host>192.168.33.10</proxy-host>
+        <proxy-port>22</proxy-port>
+        <secret-storage>master_key</secret-storage>
+        <user>vagrant</user>
+        <use-password>true</use-password>
+      </ssh-properties>
+    </data-source>
+    <data-source name="MySQL - @vagrant_root" uuid="1773f5d0-e917-4a5f-8c24-924292aa11a3">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <ssh-properties>
+        <enabled>true</enabled>
+        <proxy-host>192.168.33.10</proxy-host>
+        <proxy-port>22</proxy-port>
+        <secret-storage>master_key</secret-storage>
+        <user>vagrant</user>
+        <use-password>true</use-password>
+      </ssh-properties>
+    </data-source>
+  </component>
+</project>
