@@ -1,0 +1,1 @@
+{"virtualbox":{"/var/www":{"owner":"vagrant","group":"www-data","mount_options":["dmode=775,fmode=664"],"guestpath":"/var/www","hostpath":"/home/chris/Downloads/Vagrants/vagrant-processwire/www","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/chris/Downloads/Vagrants/vagrant-processwire","disabled":false,"__vagrantfile":true}}}

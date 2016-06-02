@@ -1,0 +1,171 @@
+/* index.php quiz */
+
+h2 {
+    text-align: center;
+    color: #777;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	margin: 10px;
+	color: #999;
+	background-color: #eee;
+}
+
+.quizForm {
+    margin:0 auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ol {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+li {
+    list-style-type: none;
+}
+
+.button {
+    width:20vw;
+    height:50px;
+    background-color: cadetblue;
+    border:none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+    font-size: 20px;
+    -webkit-box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+    box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+}
+
+.button:active{
+    box-shadow: none;
+}
+
+.radiocontainer {
+    margin: 4px;
+    display: flex;
+    flex-direction: row;
+}
+
+.radiocontainer label {
+    float: left;
+    width: 170px;
+    margin: 4px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #D0D0D0;
+    overflow: auto;
+}
+        
+.radiocontainer label span {
+    text-align: center;
+    font-size: 16px;
+    padding: 13px 0px;
+    display: block;
+}
+        
+.radiocontainer label input {
+    position: absolute;
+    top: -20px;
+}
+
+.radiocontainer input:checked + span {
+    background-color: #404040;
+    color: #F7F7F7;
+}
+
+.radiocontainer input:hover + span {
+    background-color: #404040;
+    color: #F7F7F7;
+}
+
+@media screen and (max-width: 550px) {
+    .radiocontainer {
+        flex-direction: column;
+    }
+}
+
+
+
+/* process.php */
+
+#processwrapper {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+	font-weight: normal;
+	margin: 10px;
+	color: #999;
+	background-color: #eee;
+    text-align: center;
+}
+
+.score {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* index.php mprgame */
+
+#buttoncontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.gameform {
+    margin-left: 0px;
+    margin-right: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.gamebutton {
+    width: 200px;
+    height:40px;
+    margin: 5px;
+    font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+    font-size: 20px;
+    background-color: cadetblue;
+    border:none;
+    border-radius: 5px;
+    margin-top: 20px;
+    -webkit-box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+    box-shadow: 6px 6px 3px -4px rgba(0,0,0,0.75);
+    flex: 1;
+}
+
+.gamebutton:active {
+    box-shadow: none;
+}
